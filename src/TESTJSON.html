@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<body>
+<script src="vendor/angular/angular.js"></script>
+<script src="/js/lib/ngLoading/dist/ngLoading.js"></script>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+
+    <div  data-ng-bind-html="htmlbody">asdadasdasdkhajskasjhasdadasdasdkhajskasjh</div>
+
+</div>
+
+
+<script>
+    var app = angular.module('myApp', ['ngLoading']);
+
+    /**
+     * Created by nuckylu on 17/5/7.
+     */
+
+    app.controller('myCtrl', function($scope, $http, $sce) {
+        Interceptor.start();
+        $http.get("/oa")
+            .success(function (response) {
+//                console.log($scope.sprintlist=response);});
+                var hmcontext = '';
+                for(var i = 0;i<response.posts.length /10 ;i++){
+                    hmcontext = hmcontext + '<div><a class="pull-left thumb-sm avatar m-l-n-md"><img src="img/logo.jpg" class="img-circle" alt="..."></a>    <div class="m-l-lg m-b-lg"> <div class="m-b-xs"> <a href ="http://'
+                        +response.posts[i].thread.site_full +'" class="h4">'
+                        + response.posts[i].title + '</a> <span class="text-muted m-l-sm pull-right">' + response.posts[i].published
+                        + '</span></div><div class="m-b"><div class="m-b">' + response.posts[i].thread.site_full +  '</div>'
+                        + '<img src="' + response.posts[i].thread.main_image
+                        + '"class="b b-a wrapper-xs bg-white img-responsive">' + '<div class="m-b">'
+                        + response.posts[i].text
+                        + '</div><div class="m-t-sm"><a href class="text-muted m-xs"><i class="icon-action-redo"></i></a><a href class="text-muted m-xs"><i class="icon-star"></i></a><a href class="text-muted m-xs"><i class="icon-refresh"></i> 13</a></div></div></div></div>';
+                }
+                console.log($scope.sprintlist='this is a alert');
+
+                // hmcontext = hmcontext + '<div> <a class="pull-left thumb-sm avatar m-l-n-md"> <img src="img/logo.jpg" class="img-circle" alt="..."> </a> <div class="m-l-lg m-b-lg"> <div class="m-b-xs"> <a href class="h4">Title1</a> <span class="text-muted m-l-sm pull-right"> 3h ago </span> </div> <div class="m-b"> <div class="m-b">Title2 </div> <img src="img/c5.jpg" class="b b-a wrapper-xs bg-white img-responsive"> <div class="m-b">Cecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. ullamcorper sodales nisi nec adipiscing elit. Morbi id neque quam. Aliquam sollicitudin </div> <div class="m-t-sm"> <a href class="text-muted m-xs"><i class="icon-action-redo"></i></a> <a href class="text-muted m-xs"><i class="icon-star"></i></a> <a href class="text-muted m-xs"><i class="icon-refresh"></i> 13</a> </div> </div> </div> </div>';
+                $scope.htmlbody=$sce.trustAsHtml(hmcontext)
+//                $scope.htmlstring = hmcontext;
+
+            });
+        Interceptor.end();
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
+
